@@ -1,5 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateCategoryUseCase } from './create-category.usecase';
 import { CreateCategoryDto } from './create-category.dto';
 import { CategoryMapper } from '../../../../domain';
@@ -11,6 +16,7 @@ export class CreateCategoryController {
 
   @ApiOperation({ summary: 'Создать новую категорию' })
   @ApiResponse({ status: 201, description: 'Категория успешно создана' })
+  @ApiBearerAuth()
   @Post()
   async create(@Body() dto: CreateCategoryDto) {
     const category = await this.createCategoryUseCase.execute(dto.name);

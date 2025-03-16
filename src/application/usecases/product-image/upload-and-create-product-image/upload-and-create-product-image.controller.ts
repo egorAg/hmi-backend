@@ -14,6 +14,7 @@ import {
   ApiResponse,
   ApiTags,
   ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 import { UploadAndCreateProductImageUseCase } from './upload-and-create-product-image.usecase';
 import { UploadProductImageDto } from './upload-and-create-product-image.dto';
@@ -43,8 +44,9 @@ export class UploadAndCreateProductImageController {
   @ApiBody({
     description: 'Форма загрузки изображения',
     type: UploadProductImageDto,
-  }) // Исправлено
+  })
   @ApiResponse({ status: 201, description: 'Изображение загружено' })
+  @ApiBearerAuth()
   async uploadImage(
     @UploadedFile() file: Express.Multer.File,
     @Body() uploadProductImageDto: UploadProductImageDto,

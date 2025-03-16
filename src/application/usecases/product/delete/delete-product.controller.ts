@@ -1,5 +1,10 @@
 import { Controller, Delete, Param } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { DeleteProductUseCase } from './delete-product.usecase';
 import { DeleteProductDto } from './delete-product.dto';
 
@@ -11,6 +16,7 @@ export class DeleteProductController {
   @ApiOperation({ summary: 'Удалить продукт' })
   @ApiResponse({ status: 200, description: 'Продукт удалён' })
   @ApiResponse({ status: 404, description: 'Продукт не найден' })
+  @ApiBearerAuth()
   @Delete(':id')
   async delete(@Param() params: DeleteProductDto) {
     await this.deleteProductUseCase.execute(params.id);

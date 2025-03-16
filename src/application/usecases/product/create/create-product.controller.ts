@@ -1,5 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CreateProductUseCase } from './create-product.usecase';
 import { CreateProductDto } from './create-product.dto';
 import { ProductMapper } from '../../../../domain';
@@ -11,6 +16,7 @@ export class CreateProductController {
 
   @ApiOperation({ summary: 'Создать новый продукт' })
   @ApiResponse({ status: 201, description: 'Продукт успешно создан' })
+  @ApiBearerAuth()
   @Post()
   async create(@Body() dto: CreateProductDto) {
     const product = await this.createProductUseCase.execute(

@@ -1,5 +1,10 @@
 import { Controller, Delete, Param } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { DeleteCategoryUseCase } from './delete-category.usecase';
 import { DeleteCategoryDto } from './delete-category.dto';
 
@@ -11,6 +16,7 @@ export class DeleteCategoryController {
   @ApiOperation({ summary: 'Удалить категорию' })
   @ApiResponse({ status: 200, description: 'Категория удалена' })
   @ApiResponse({ status: 404, description: 'Категория не найдена' })
+  @ApiBearerAuth()
   @Delete(':id')
   async delete(@Param() params: DeleteCategoryDto) {
     await this.deleteCategoryUseCase.execute(params.id);

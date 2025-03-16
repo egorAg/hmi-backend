@@ -1,5 +1,10 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { GetProductsUseCase } from './get-products.usecase';
 import { GetProductsDto } from './get-products.dto';
 import { ProductMapper } from '../../../../domain';
@@ -13,6 +18,7 @@ export class GetProductsController {
     summary: 'Получить список продуктов с пагинацией и фильтрацией',
   })
   @ApiResponse({ status: 200, description: 'Список продуктов' })
+  @ApiBearerAuth()
   @Get()
   async getAll(@Query() query: GetProductsDto) {
     const products = await this.getProductsUseCase.execute(
