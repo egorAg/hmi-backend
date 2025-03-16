@@ -6,6 +6,7 @@ import {
   CategoryEntity,
   ProductEntity,
   ProductImageEntity,
+  UserEntity,
 } from '../entities';
 import { ConfigService } from '@nestjs/config';
 
@@ -18,7 +19,13 @@ export const ormconfig: DataSourceOptions = {
   username: configService.get<string>('DATABASE_USER', 'postgres'),
   password: configService.get<string>('DATABASE_PASSWORD', 'mysecretpassword'),
   database: configService.get<string>('DATABASE_NAME', 'mydatabase'),
-  entities: [BrandEntity, CategoryEntity, ProductEntity, ProductImageEntity],
+  entities: [
+    BrandEntity,
+    CategoryEntity,
+    ProductEntity,
+    ProductImageEntity,
+    UserEntity,
+  ],
   migrations: ['src/infrastructure/database/migrations/*.ts'],
   synchronize: false,
   logging: true,

@@ -18,7 +18,9 @@ import {
   GetProductsModule,
   UpdateProductModule,
   UploadAndCreateProductImageModule,
-} from './application';
+  RegisterModule,
+  LoginModule,
+} from '@application/usecases';
 import * as path from 'node:path';
 import { join } from 'path';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -46,6 +48,8 @@ const PRODUCT_MODULES = [
   UpdateProductModule,
   DeleteProductModule,
 ];
+
+const AUTH_MODULES = [RegisterModule, LoginModule];
 
 const PRODUCT_IMAGE_MODULES = [UploadAndCreateProductImageModule];
 
@@ -82,6 +86,7 @@ const PRODUCT_IMAGE_MODULES = [UploadAndCreateProductImageModule];
     ...CATEGORY_MODULES,
     ...PRODUCT_MODULES,
     ...PRODUCT_IMAGE_MODULES,
+    ...AUTH_MODULES,
   ],
   controllers: [],
   providers: [],

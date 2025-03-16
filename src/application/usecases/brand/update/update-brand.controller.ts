@@ -1,5 +1,10 @@
 import { Body, Controller, Patch } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UpdateBrandUseCase } from './update-brand.usecase';
 import { UpdateBrandDto } from './update-brand.dto';
 import { BrandMapper } from '../../../../domain';
@@ -12,6 +17,7 @@ export class UpdateBrandController {
   @ApiOperation({ summary: 'Обновить бренд' })
   @ApiResponse({ status: 200, description: 'Бренд успешно обновлён' })
   @ApiResponse({ status: 404, description: 'Бренд не найден' })
+  @ApiBearerAuth()
   @Patch()
   async update(@Body() dto: UpdateBrandDto) {
     const brand = await this.updateBrandUseCase.execute(dto.id, dto.name);
