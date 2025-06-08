@@ -78,7 +78,7 @@ npm run start:dev
 yarn start:dev
 ```
 
-Сервер запустится на **`http://localhost:3000`**.
+Сервер запустится на **`http://localhost:4000`**.
 
 ---
 
