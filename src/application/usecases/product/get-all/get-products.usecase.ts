@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ProductRepository } from '../../../../infrastructure';
-import { Product, ProductMapper } from '../../../../domain';
+import { Product, ProductMapper } from '@domain/product';
 
 @Injectable()
 export class GetProductsUseCase {
@@ -11,17 +11,15 @@ export class GetProductsUseCase {
     limit: number,
     categoryId?: string,
     brandId?: string,
-  ): Promise<Product[]> {
-    const filters: any = {};
-    if (categoryId) filters.categoryId = categoryId;
-    if (brandId) filters.brandId = brandId;
+  ): Promise<{ products: Product[]; totalCount: number }> {
+    const { products: entities, totalCount } =
+      await this.productRepository.findWithPaginationAndImages(page, limit, {
+        categoryId,
+        brandId,
+      });
 
-    const products = await this.productRepository.find({
-      where: filters,
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+    const products = entities.map(ProductMapper.toDomain);
 
-    return products.map(ProductMapper.toDomain);
+    return { products, totalCount };
   }
 }

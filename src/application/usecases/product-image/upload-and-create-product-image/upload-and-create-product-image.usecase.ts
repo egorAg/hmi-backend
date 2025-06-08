@@ -4,7 +4,11 @@ import {
   ProductImageRepository,
   ProductRepository,
 } from '../../../../infrastructure';
-import { ProductImage, ProductMapper } from '../../../../domain';
+import {
+  ProductImage,
+  ProductImageMapper,
+  ProductMapper,
+} from '../../../../domain';
 
 @Injectable()
 export class UploadAndCreateProductImageUseCase {
@@ -15,6 +19,10 @@ export class UploadAndCreateProductImageUseCase {
 
   async execute(productId: string, filename: string) {
     const productRaw = await this.productRepository.findById(productId);
+    console.log(
+      `Загружаем изображение для продукта с ID: ${productId}, имя файла: ${filename}`,
+    );
+    console.log(`Полученный продукт: ${JSON.stringify(productRaw)}`);
 
     if (!productRaw) {
       throw new NotFoundException('Продукт не найден');
@@ -28,7 +36,14 @@ export class UploadAndCreateProductImageUseCase {
       url: imagePath,
       product: productDomain,
     });
-
-    return this.productImageRepository.create(productImage);
+    console.log(
+      `Создаём изображение продукта: ${JSON.stringify(productImage)}`,
+    );
+    // Сохраняем изображение в репозитории
+    const presistanceImage = ProductImageMapper.toPersistence(productImage);
+    console.log(
+      `Сохраняем изображение в репозитории: ${JSON.stringify(presistanceImage)}`,
+    );
+    return this.productImageRepository.save(presistanceImage);
   }
 }

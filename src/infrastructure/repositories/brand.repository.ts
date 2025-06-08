@@ -12,4 +12,17 @@ export class BrandRepository extends BaseRepository<BrandEntity> {
   async findByName(name: string): Promise<BrandEntity | null> {
     return this.findOne({ where: { name } });
   }
+
+  async findWithPagination(page: number, limit: number): Promise<{ brands: BrandEntity[]; totalCount: number }> {
+    const [brands, totalCount] = await this.findAndCount({
+      skip: (page - 1) * limit,
+      take: limit,
+      order: { name: 'ASC' }, // по желанию
+    });
+
+    return {
+      brands,
+      totalCount,
+    };
+  }
 }

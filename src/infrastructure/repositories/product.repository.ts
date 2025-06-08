@@ -9,10 +9,28 @@ export class ProductRepository extends BaseRepository<ProductEntity> {
     super(ProductEntity, dataSource);
   }
 
-  async findWithImages(productId: string): Promise<ProductEntity | null> {
-    return this.findOne({
-      where: { id: productId },
+  async findWithPaginationAndImages(
+    page: number,
+    limit: number,
+    filters: { categoryId?: string; brandId?: string } = {},
+  ): Promise<{ products: ProductEntity[]; totalCount: number }> {
+    const where: any = {};
+
+    if (filters.categoryId) {
+      where.categoryId = filters.categoryId;
+    }
+
+    if (filters.brandId) {
+      where.brandId = filters.brandId;
+    }
+
+    const [products, totalCount] = await this.findAndCount({
+      where,
       relations: ['images'],
+      skip: (page - 1) * limit,
+      take: limit,
     });
+
+    return { products, totalCount };
   }
 }

@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto';
 import { Brand } from '../brand';
 import { Category } from '../category';
 import { IProductProps } from './product.interfaces';
+import { ProductImage } from '@domain/product-image';
 
 export class Product {
   constructor(private readonly props: IProductProps) {}
@@ -40,5 +41,9 @@ export class Product {
 
   public get brandId(): string | undefined {
     return this.props.brandId;
+  }
+
+  public get images(): ProductImage[] {
+    return this.props.images ? this.props.images : [];
   }
 }

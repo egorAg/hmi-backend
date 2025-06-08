@@ -5,9 +5,9 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetProductsUseCase } from './get-products.usecase';
+import { GetProductsUseCase } from '@application/usecases';
 import { GetProductsDto } from './get-products.dto';
-import { ProductMapper } from '../../../../domain';
+import { ProductMapper } from '@domain/product';
 
 @ApiTags('Products')
 @Controller('products')
@@ -21,12 +21,12 @@ export class GetProductsController {
   @ApiBearerAuth()
   @Get()
   async getAll(@Query() query: GetProductsDto) {
-    const products = await this.getProductsUseCase.execute(
+    const { products, totalCount } = await this.getProductsUseCase.execute(
       query.page,
       query.limit,
       query.categoryId,
       query.brandId,
     );
-    return products.map(ProductMapper.toPersistence);
+    return { products: products.map(ProductMapper.toPersistence), totalCount };
   }
 }

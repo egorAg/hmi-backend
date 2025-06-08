@@ -5,9 +5,9 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetCategoriesUseCase } from './get-categories.usecase';
+import { GetCategoriesUseCase } from '@application/usecases';
 import { GetCategoriesDto } from './get-categories.dto';
-import { CategoryMapper } from '../../../../domain';
+import { CategoryMapper } from '@domain/category';
 
 @ApiTags('Categories')
 @Controller('categories')
@@ -19,10 +19,13 @@ export class GetCategoriesController {
   @ApiBearerAuth()
   @Get()
   async getAll(@Query() query: GetCategoriesDto) {
-    const categories = await this.getCategoriesUseCase.execute(
+    const { categories, totalCount } = await this.getCategoriesUseCase.execute(
       query.page,
       query.limit,
     );
-    return categories.map(CategoryMapper.toPersistence);
+    return {
+      categories: categories.map(CategoryMapper.toPersistence),
+      totalCount,
+    };
   }
 }

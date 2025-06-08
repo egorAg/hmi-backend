@@ -24,7 +24,10 @@ yarn install
 Для локального запуска базы данных используйте `Dockerfile`:
 
 ```shell
-docker build -t postgres-db -f database/dockerfile . docker run -d --name postgres-db -p 5432:5432 postgres-db
+docker build -t postgres-db -f database/Dockerfile .
+```
+```shell
+docker run -d --name postgres-db -p 5432:5432 postgres-db
 ```
 
 После этого PostgreSQL будет работать на `localhost:5432`.
@@ -94,7 +97,7 @@ yarn start:dev
 
 ## 📜 Документация API (Swagger)
 После запуска приложения Swagger-документация доступна по адресу:  
-📌 **`http://localhost:3000/api/docs`**
+📌 **`http://localhost:3000/api-docs`**
 
 Там можно:
 - Посмотреть все эндпоинты

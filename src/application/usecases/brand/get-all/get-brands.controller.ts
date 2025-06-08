@@ -7,7 +7,7 @@ import {
 } from '@nestjs/swagger';
 import { GetBrandsUseCase } from './get-brands.usecase';
 import { GetBrandsDto } from './get-brands.dto';
-import { BrandMapper } from '../../../../domain';
+import { BrandMapper } from '@domain/brand';
 
 @ApiTags('Brands')
 @Controller('brands')
@@ -19,7 +19,10 @@ export class GetBrandsController {
   @ApiBearerAuth()
   @Get()
   async getAll(@Query() query: GetBrandsDto) {
-    const brands = await this.getBrandsUseCase.execute(query.page, query.limit);
-    return brands.map(BrandMapper.toPersistence);
+    const { brands, totalCount } = await this.getBrandsUseCase.execute(
+      query.page,
+      query.limit,
+    );
+    return { brands: brands.map(BrandMapper.toPersistence), totalCount };
   }
 }

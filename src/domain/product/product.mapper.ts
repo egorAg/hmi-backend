@@ -1,3 +1,4 @@
+import { ProductImageMapper } from '@domain/product-image';
 import { BrandMapper } from '../brand';
 import { CategoryMapper } from '../category';
 import { Product } from './product.domain';
@@ -16,6 +17,7 @@ export class ProductMapper {
         : undefined,
       brandId: raw.brandId,
       brand: raw.brand ? BrandMapper.toDomain(raw.brand) : undefined,
+      images: raw.images ? raw.images.map(ProductImageMapper.toDomain) : [],
     });
   }
 
@@ -33,6 +35,9 @@ export class ProductMapper {
       brand: product.brand
         ? BrandMapper.toPersistence(product.brand)
         : undefined,
+      images: product.images
+        ? product.images.map(ProductImageMapper.toPersistence)
+        : [],
     };
   }
 }

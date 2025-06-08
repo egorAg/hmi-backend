@@ -7,10 +7,6 @@ export class ProductImage {
     if (!props.url || props.url.trim() === '') {
       throw new Error('URL изображения обязателен.');
     }
-
-    if (!props.productId && !props.product) {
-      throw new Error('Изображение должно быть связано с товаром.');
-    }
   }
 
   public static create(props: IProductImageProps): ProductImage {

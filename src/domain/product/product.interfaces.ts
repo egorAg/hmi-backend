@@ -1,3 +1,4 @@
+import { IProductImageUnmarshalled, ProductImage } from '@domain/product-image';
 import { Brand, IBrandUnmarshalled } from '../brand';
 import { Category, ICategoryUnmarshalled } from '../category';
 
@@ -10,6 +11,7 @@ export interface IProductProps {
   category?: Category;
   brandId?: string;
   brand?: Brand;
+  images?: ProductImage[];
 }
 
 export interface IProductUnmarshalled {
@@ -21,4 +23,5 @@ export interface IProductUnmarshalled {
   category?: ICategoryUnmarshalled;
   brandId?: string;
   brand?: IBrandUnmarshalled;
+  images?: IProductImageUnmarshalled[];
 }

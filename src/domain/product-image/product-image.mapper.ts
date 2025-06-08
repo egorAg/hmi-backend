@@ -8,7 +8,7 @@ export class ProductImageMapper {
       id: raw.id,
       url: raw.url,
       productId: raw.productId,
-      product: ProductMapper.toDomain(raw.product),
+      product: raw.product ? ProductMapper.toDomain(raw.product) : undefined,
     });
   }
 
@@ -19,7 +19,9 @@ export class ProductImageMapper {
       id: productImage.id,
       url: productImage.url,
       productId: productImage.productId,
-      product: ProductMapper.toPersistence(productImage.product),
+      product: productImage.product
+        ? ProductMapper.toPersistence(productImage.product)
+        : undefined,
     };
   }
 }
