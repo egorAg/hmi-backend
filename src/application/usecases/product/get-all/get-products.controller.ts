@@ -5,7 +5,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetProductsUseCase } from '@application/usecases';
+import { GetProductsUseCase } from './get-products.usecase';
 import { GetProductsDto } from './get-products.dto';
 import { ProductMapper } from '@domain/product';
 

@@ -5,7 +5,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetCategoriesUseCase } from '@application/usecases';
+import { GetCategoriesUseCase } from './get-categories.usecase';
 import { GetCategoriesDto } from './get-categories.dto';
 import { CategoryMapper } from '@domain/category';
 

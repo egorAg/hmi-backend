@@ -5,7 +5,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { GetBrandByIdUseCase } from '@application/usecases';
+import { GetBrandByIdUseCase } from './get-brand-by-id.usecase';
 import { GetBrandByIdDto } from './get-brand-by-id.dto';
 import { BrandMapper } from '@domain/brand';
 
